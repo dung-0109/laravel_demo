@@ -2,11 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AgeController;
 
 Route::get('/', function () {
     return view('home.index');
 });
-    
+
 // Product
 Route::prefix('product')->group(function () {
     // Matches The "/admin/users" URL
@@ -45,3 +46,9 @@ Route::prefix('auth')->controller(AuthController::class)->group(function () {
     Route::get('/signin', 'signIn')->name('signin');
     Route::post('/check-signin', 'checkSignIn')->name('check.signin');
 });
+
+Route::get('/age', [AgeController::class, 'index']);
+Route::post('/age/store', [AgeController::class, 'store']);
+
+Route::get('/age/check', [AgeController::class, 'check'])
+    ->middleware('check.age');
