@@ -1,11 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 
 Route::get('/', function () {
     return view('home.index');
 });
-
+    
 // Product
 Route::prefix('product')->group(function () {
     // Matches The "/admin/users" URL
@@ -35,4 +36,12 @@ Route::get('/sinhvien/{name?}/{mssv?}', function (?string $name = "Luong Xuan Hi
 // Bàn cờ
 Route::get('/banco/{n}', function (int $n) {
     return view('banco.index', ['n' => $n]);
+});
+Route::get('/login', function () {
+    return view('login.index');
+});
+
+Route::prefix('auth')->controller(AuthController::class)->group(function () {
+    Route::get('/signin', 'signIn')->name('signin');
+    Route::post('/check-signin', 'checkSignIn')->name('check.signin');
 });
